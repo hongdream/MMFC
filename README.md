@@ -20,7 +20,6 @@ The framework has three main components:
 
 *Figure 1(b): Federated workflow with local learning, parameter aggregation, pseudo multimodal data generation, and global cluster-structure learning.*
 
-> **Code release:** this repository currently provides a simplified public implementation. The framework figures and comparison results describe the complete MMFC method reported in the manuscript.
 
 ## Requirements
 
@@ -53,7 +52,7 @@ The manuscript evaluates the following paired speech-text datasets:
 | LibriSpeech | LS | `libri1024` | 5,466 | 18,231 | 1,024 |
 | TED-LIUM Release 3 | TR | `tedlium1024` | 2,351 | 9,295 | 1,024 |
 
-These sample counts and feature dimensions are the manuscript's experimental settings. The public loader constructs its text vocabulary from the selected split. Processed datasets are included under `datasets/1024-LibriSpeech` and `datasets/1024-TEDLIUM_release3`; raw audio is not included.
+These sample counts and feature dimensions are the manuscript's experimental settings. 
 
 The public training defaults are 5 clients, 6 clusters, a 20-dimensional latent space, 20 deterministic pretraining rounds, and 50 federated rounds. The encoder hidden layers are `[1024, 512, 256]`, and the decoders use the mirrored configuration `[256, 512, 1024]`.
 
@@ -85,7 +84,7 @@ Train on both datasets sequentially:
 python train.py --dataset both
 ```
 
-Running `python train.py` also trains on both datasets by default. Each run saves `training.log`, `metrics.csv`, `server_model.pt`, `global_vmfmm.pt`, and `predictions.npy` under `outputs/<dataset>/`. Predictions follow the selected CSV split's row order, and checkpoints record `implementation: simplified`.
+Running `python train.py` also trains on both datasets by default. Each run saves `training.log`, `metrics.csv`, `server_model.pt`, `global_vmfmm.pt`, and `predictions.npy` under `outputs/<dataset>/`.
 
 ## Comparison Results
 
@@ -105,8 +104,6 @@ The baselines use textual BoW features, while MMFC uses paired BoW and BoAW feat
 | **DB ↓** | TR | 15.7933 ± 0.529 | 11.2428 ± 2.559 | 13.1473 ± 0.792 | 2.1880 ± 0.439 | 13.9160 ± 2.108 | <u>0.9553 ± 0.206</u> | 2.2205 ± 1.136 | 21.7847 ± 2.662 | 21.6746 ± 3.423 | **0.9160 ± 0.108** |
 
 MMFC achieves the highest SC and CH scores on both datasets, the lowest DB on TR, and the second-lowest DB on LS.
-
-The table reports the complete method's manuscript results. The simplified public implementation computes its training-time clustering metrics in the latent space, so those outputs use a different evaluation protocol.
 
 ### Modality Evaluation
 
